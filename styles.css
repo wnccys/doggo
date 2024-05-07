@@ -1,14 +1,34 @@
 body { 
-    height: 100%;
-    width: 100%;
+    height: 100vh;
+    width: 100vw;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    background-color: #fffcf2;
 }
 
 #container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    padding-top: 20px;
 }
+
+#doggo-image {
+    max-width: 50vw;
+    max-height: 80vh;
+    margin-left: 25%;
+}
+
+#doggo-video {
+    max-width: 50vw;
+    max-height: 80vh;
+    margin-left: 25%;
+}
+
+#doggo-button {
+    align-self: center;
+    margin-top: 30px;
+    max-width: vw;
+}
+
+/* button bckgd: #dda15e */
