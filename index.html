@@ -8,15 +8,19 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" 
     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous">
     </script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </head>
 <body onload="requestDoggoURL();">
-    <div class="container">
-        <div id="image-card">
-            <img id="doggo-image" alt="doggo-image" style="max-width: 500px;">
-            <video id="doggo-video" autoplay muted loop>
-            </video>
-        </div>
-    </div> 
+    <div id="container">
+        <img id="doggo-image" alt="doggo-image">
+        <video id="doggo-video" autoplay muted loop style="max-width: 600px; max-height: 500px;">
+        </video>
+        <button id="doggo-button" class="btn waves-effect waves-light" type="submit" name="action" onclick="requestDoggoURL();">More Dogs!
+            <i class="material-icons right">autorenew</i>
+        </button>
+    </div>
 </body>
 <script>
     function requestDoggoURL () {
@@ -40,15 +44,15 @@
     } 
 
     function setDoggoImage(image_url) {
+        $("#doggo-video").hide();
         $("#doggo-image").attr("src", `https://random.dog/${image_url}`);
         $("#doggo-image").show();
-        $("doggo-video").hide();
     }
 
     function setDoggoVideo(video_url) {
+        $("#doggo-image").hide();
         $("#doggo-video").attr("src", `https://random.dog/${video_url}`);
         $("#doggo-video").show();
-        $("#doggo-image").hide();
     }
 </script>
 </html>
