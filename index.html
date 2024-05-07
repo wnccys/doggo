@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doggos</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" 
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous">
+    </script>
+</head>
+<body onload="requestDoggoURL();">
+    <div class="container">
+        <div id="image-card">
+            <img id="doggo-image" alt="doggo-image" style="max-width: 500px;">
+            <video id="doggo-video" autoplay muted loop>
+            </video>
+        </div>
+    </div> 
+</body>
+<script>
+    function requestDoggoURL () {
+        $.ajax({
+            url: "https://random.dog/woof",
+            method: "GET",
+            success: (media_url) => {
+                let extension = (media_url.split(".").pop()).toLowerCase();
+                console.log("Extension: ", extension);
+
+                if (extension == "mp4" || extension == "webm") {
+                    return setDoggoVideo(media_url);
+                }
+
+                setDoggoImage(media_url);
+            },
+            error: (xhr, status, error) => {
+                console.error("Error: " + status + " " + error);
+            }
+        });
+    } 
+
+    function setDoggoImage(image_url) {
+        $("#doggo-image").attr("src", `https://random.dog/${image_url}`);
+        $("#doggo-image").show();
+        $("doggo-video").hide();
+    }
+
+    function setDoggoVideo(video_url) {
+        $("#doggo-video").attr("src", `https://random.dog/${video_url}`);
+        $("#doggo-video").show();
+        $("#doggo-image").hide();
+    }
+</script>
+</html>
