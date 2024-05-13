@@ -10,6 +10,7 @@
     </script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </head>
 <body onload="requestDoggoURL();">
@@ -17,13 +18,13 @@
         <img id="doggo-image" alt="doggo-image">
         <video id="doggo-video" autoplay muted loop style="max-width: 600px; max-height: 500px;">
         </video>
-        <button id="doggo-button" class="btn waves-effect waves-light" type="submit" name="action" onclick="requestDoggoURL();">More Dogs!
+        <button id="doggo-button" class="btn waves-effect waves-light" type="submit"  style="position: static;" name="action" onclick="requestDoggoURL();">More Dogs!
             <i class="material-icons right">autorenew</i>
         </button>
     </div>
 </body>
 <script>
-    function requestDoggoURL () {
+    async function requestDoggoURL () {
         $.ajax({
             url: "https://random.dog/woof",
             method: "GET",

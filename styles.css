@@ -13,16 +13,11 @@ body {
     padding-top: 20px;
 }
 
-#doggo-image {
-    max-width: 50vw;
+#doggo-image, #doggo-video {
+    align-self: center;
+    max-width: 80vw;
     max-height: 80vh;
-    margin-left: 25%;
-}
-
-#doggo-video {
-    max-width: 50vw;
-    max-height: 80vh;
-    margin-left: 25%;
+    border-radius: 20px;
 }
 
 #doggo-button {
@@ -30,5 +25,3 @@ body {
     margin-top: 30px;
     max-width: vw;
 }
-
-/* button bckgd: #dda15e */
