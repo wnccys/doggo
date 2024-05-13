@@ -11,27 +11,45 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </head>
 <body onload="requestDoggoURL();">
     <div id="container">
-        <img id="doggo-image" alt="doggo-image">
-        <video id="doggo-video" autoplay muted loop style="max-width: 600px; max-height: 500px;">
-        </video>
-        <button id="doggo-button" class="btn waves-effect waves-light" type="submit"  style="position: static;" name="action" onclick="requestDoggoURL();">More Dogs!
-            <i class="material-icons right">autorenew</i>
-        </button>
+        <div style="position: relative; width: 100vw; display: flex; justify-content: center;">
+            <div style="top: 0; left: 0; transform: translateX(40px) translateY(10px)">
+                <i data-lucide="star" style="color: orange; cursor: pointer;" onclick="setImageAsFavorite()"></i>
+            </div>
+            <img id="doggo-image" alt="doggo-image" style="align-self: center;">
+            <video id="doggo-video" autoplay muted loop style="max-width: 600px; max-height: 500px;">
+            </video>
+        </div>
+
+        <div id="button-container">
+            <button id="doggo-button" class="btn waves-effect waves-light" type="submit"  style="position: static;" 
+             name="action" onclick="requestDoggoURL();">More Dogs!
+                <i class="material-icons right">autorenew</i>
+            </button>
+            <button id="doggo-button" class="btn waves-effect waves-light" style="position: static;"
+             name="action" onclick="requestDoggoURL();">My favorites
+                <i class="material-icons right">star</i>
+            </button>
+        </div>
     </div>
 </body>
 <script>
+    const doggoBaseURL = "https://random.dog/";
+    let currentImageURL = undefined;
+
     async function requestDoggoURL () {
         $.ajax({
-            url: "https://random.dog/woof",
+            url: doggoBaseURL + "woof",
             method: "GET",
+            cache: false,
             success: (media_url) => {
-                let extension = (media_url.split(".").pop()).toLowerCase();
-                console.log("Extension: ", extension);
+                setCurrentImage(media_url);
 
+                let extension = (media_url.split(".").pop()).toLowerCase();
                 if (extension == "mp4" || extension == "webm") {
                     return setDoggoVideo(media_url);
                 }
@@ -44,16 +62,32 @@
         });
     } 
 
+    function setCurrentImage(media_url) {
+        currentImageURL = media_url;
+    }
+
+    function setImageAsFavorite() {
+        localStorage.setItem(currentImageURL, currentImageURL);
+        console.log(localStorage);
+    }
+
+
     function setDoggoImage(image_url) {
         $("#doggo-video").hide();
-        $("#doggo-image").attr("src", `https://random.dog/${image_url}`);
+        $("#doggo-image").attr("src", doggoBaseURL + image_url);
+        console.log(doggoBaseURL + image_url)
         $("#doggo-image").show();
     }
 
     function setDoggoVideo(video_url) {
         $("#doggo-image").hide();
-        $("#doggo-video").attr("src", `https://random.dog/${video_url}`);
+        $("#doggo-video").attr("src", doggoBaseURL + video_url);
         $("#doggo-video").show();
     }
+</script>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+    lucide.createIcons();
 </script>
 </html>
