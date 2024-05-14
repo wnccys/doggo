@@ -18,7 +18,7 @@
     <div id="container">
         <div style="position: relative; width: 100vw; display: flex; justify-content: center;">
             <div style="top: 0; left: 0; transform: translateX(40px) translateY(10px)">
-                <i data-lucide="star" style="color: orange; cursor: pointer;" onclick="setImageAsFavorite()"></i>
+                <i id="favoriteIcon" data-lucide="star" style="color: orange; cursor: pointer;" onclick="changeImageAsFavorite()"></i>
             </div>
             <img id="doggo-image" alt="doggo-image" style="align-self: center;">
             <video id="doggo-video" autoplay muted loop style="max-width: 600px; max-height: 500px;">
@@ -31,7 +31,7 @@
                 <i class="material-icons right">autorenew</i>
             </button>
             <button id="doggo-button" class="btn waves-effect waves-light" style="position: static;"
-             name="action" onclick="requestDoggoURL();">My favorites
+             name="action" onclick="showFavorites()">My favorites
                 <i class="material-icons right">star</i>
             </button>
         </div>
@@ -64,18 +64,45 @@
 
     function setCurrentImage(media_url) {
         currentImageURL = media_url;
+        verifyFavorites();
     }
 
-    function setImageAsFavorite() {
-        localStorage.setItem(currentImageURL, currentImageURL);
+    function verifyFavorites(){
+        let favoriteIcon = document.getElementById("favoriteIcon");
+
+        if (localStorage.getItem(currentImageURL) != null) {
+            favoriteIcon.dataset.lucide = 'star-off';
+
+            return console.log("favorited!");
+        }
+    }
+    
+    function showFavorites() {
         console.log(localStorage);
+    }
+
+    function changeImageAsFavorite() {
+        let favoriteIcon = document.getElementById("favoriteIcon");
+
+        if (favoriteIcon.dataset.lucide == "star-off") {
+            favoriteIcon.dataset.lucide = "star";
+            localStorage.removeItem(currentImageURL)
+            lucide.createIcons();
+
+            console.log("removed from favorites!");
+            return
+        }
+
+        localStorage.setItem(currentImageURL, currentImageURL);
+        favoriteIcon.dataset.lucide = "star-off";
+        lucide.createIcons();
+        console.log("added to favorites!");
     }
 
 
     function setDoggoImage(image_url) {
         $("#doggo-video").hide();
         $("#doggo-image").attr("src", doggoBaseURL + image_url);
-        console.log(doggoBaseURL + image_url)
         $("#doggo-image").show();
     }
 
