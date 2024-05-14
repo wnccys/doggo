@@ -20,8 +20,8 @@
 <body onload="requestDoggoURL();">
     <div id="container">
         <div style="position: relative; width: 98vw; display: flex; justify-content: center;">
-            <div style="top: 0; left: 0; transform: translateX(40px) translateY(10px)">
-                <i id="favoriteIcon" data-lucide="star" style="color: orange; cursor: pointer;" 
+            <div style="top: 0; left: 0; transform: translateX(40px) translateY(10px); z-index: 1001;">
+                <i id="favoriteIcon" data-lucide="star" style="color: orange; cursor: pointer; z-index: 1000;" 
                 onclick="changeImageAsFavorite()"></i>
             </div>
             <img id="doggo-image" alt="doggo-image" style="align-self: center;">
@@ -83,6 +83,9 @@
 
             return console.log("favorited!");
         }
+
+        favoriteIcon.dataset.lucide = 'star';
+        lucide.createIcons();
     }
     
     function showFavorites() {
