@@ -13,12 +13,13 @@
     <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="https://unpkg.com/htmx.org@1.9.12" 
-    integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <body onload="requestDoggoURL();">
     <div id="container">
-        <div style="position: relative; width: 100vw; display: flex; justify-content: center;">
+        <div style="position: relative; width: 98vw; display: flex; justify-content: center;">
             <div style="top: 0; left: 0; transform: translateX(40px) translateY(10px)">
                 <i id="favoriteIcon" data-lucide="star" style="color: orange; cursor: pointer;" 
                 onclick="changeImageAsFavorite()"></i>
@@ -29,21 +30,18 @@
         </div>
 
         <div id="button-container">
-            <button id="doggo-button" class="btn waves-effect waves-light" type="submit"  style="position: static;" 
+            <button id="doggo-button" class="btn waves-effect waves-light doggo-button" type="submit"  style="position: static;" 
              name="action" onclick="requestDoggoURL();">More Dogs!
                 <i class="material-icons right">autorenew</i>
             </button>
-            <button id="doggo-button" class="btn waves-effect waves-light" style="position: static;"
-             name="action" onclick="showFavorites()">My favorites
+            <button id="favorites-button" class="btn waves-effect waves-light doggo-button" style="position: static;"
+             name="action" onclick="setDoggoSRC(); toggleVisibility();">My favorites
                 <i class="material-icons right">star</i>
             </button>
-            <button id="doggo-button" class="btn waves-effect waves-light" style="position: static;"
-             name="action" hx-get="/favorites.html" hx-target="#content" >SHOW HTMX
-                <i class="material-icons right">book</i>
-            </button>
         </div>
-        <div id="content" style="margin-top: 2rem; max-width: 40vw; min-width: 400px; align-self: center;">
-
+        <div id="content" style="margin-top: 2rem; max-width: 40vw; min-width: 400px; align-self: center; display: none;">
+            <ul class="collection" id="fav-list">
+            </ul>
         </div>
     </div>
 </body>
@@ -120,6 +118,34 @@
         $("#doggo-image").hide();
         $("#doggo-video").attr("src", doggoBaseURL + video_url);
         $("#doggo-video").show();
+    }
+
+    function toggleVisibility() {
+        const content = document.getElementById('content');
+
+        if (content.style.display == 'none') {
+            content.style.display = 'block';
+            return;
+        }
+
+        content.style.display = 'none';
+    }
+
+    function setDoggoSRC() {
+        let favList = document.getElementById("fav-list");
+
+        for (let i = 0; i < localStorage.length; i++) {
+            let key = localStorage.key(i);
+            if (key != 'brk_chovei') {
+                favList.innerHTML += `<li class="collection-item avatar" id="${localStorage.getItem(key)}"><img src="${doggoBaseURL + localStorage.getItem(key)}" alt="favdoggo" class="circle"><span class="title" style="padding-right: 5px"></span><p>${localStorage.getItem(key)}<br></p><a href="${doggoBaseURL + localStorage.getItem(key)}" class="secondary-content"><i class="material-icons doggo-icon">visibility</i></a><a style="padding-top: 10px; cursor: pointer;" onclick="deleteFromFavorites(${localStorage.getItem(key)});"><i class="material-icons doggo-icon">delete</i></a></li>`
+            }
+        }
+    }
+
+    function deleteFromFavorites(id) {
+        localStorage.removeItem(id);
+        let favoriteItem = document.getElementById(id);
+        favoriteItem.remove();
     }
 </script>
 
