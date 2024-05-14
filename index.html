@@ -91,10 +91,12 @@
 
     function changeImageAsFavorite() {
         let favoriteIcon = document.getElementById("favoriteIcon");
+        let favItem = document.getElementById(currentImageURL);
 
         if (favoriteIcon.dataset.lucide == "star-off") {
             favoriteIcon.dataset.lucide = "star";
-            localStorage.removeItem(currentImageURL)
+            localStorage.removeItem(currentImageURL);
+            favItem.remove();
             lucide.createIcons();
 
             console.log("removed from favorites!");
@@ -136,8 +138,8 @@
 
         for (let i = 0; i < localStorage.length; i++) {
             let key = localStorage.key(i);
-            if (key != 'brk_chovei') {
-                favList.innerHTML += `<li class="collection-item avatar" id="${localStorage.getItem(key)}"><img src="${doggoBaseURL + localStorage.getItem(key)}" alt="favdoggo" class="circle"><span class="title" style="padding-right: 5px"></span><p>${localStorage.getItem(key)}<br></p><a href="${doggoBaseURL + localStorage.getItem(key)}" class="secondary-content"><i class="material-icons doggo-icon">visibility</i></a><a style="padding-top: 10px; cursor: pointer;" onclick="deleteFromFavorites(${localStorage.getItem(key)});"><i class="material-icons doggo-icon">delete</i></a></li>`
+            if (key != 'brk_chovei' && !(document.getElementById(localStorage.getItem(key)))) {
+                favList.innerHTML += `<li class="collection-item avatar" id="${localStorage.getItem(key)}"><img src="${doggoBaseURL + localStorage.getItem(key)}" alt="favdoggo" class="circle"><span class="title" style="padding-right: 5px"></span><p>${localStorage.getItem(key)}<br></p><a href="${doggoBaseURL + localStorage.getItem(key)}" class="secondary-content"><i class="material-icons doggo-icon">visibility</i></a><a style="padding-top: 10px; cursor: pointer;" onclick="deleteFromFavorites('${key}');"><i class="material-icons doggo-icon">delete</i></a></li>`
             }
         }
     }
