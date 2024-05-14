@@ -13,12 +13,15 @@
     <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.12" 
+    integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
 </head>
 <body onload="requestDoggoURL();">
     <div id="container">
         <div style="position: relative; width: 100vw; display: flex; justify-content: center;">
             <div style="top: 0; left: 0; transform: translateX(40px) translateY(10px)">
-                <i id="favoriteIcon" data-lucide="star" style="color: orange; cursor: pointer;" onclick="changeImageAsFavorite()"></i>
+                <i id="favoriteIcon" data-lucide="star" style="color: orange; cursor: pointer;" 
+                onclick="changeImageAsFavorite()"></i>
             </div>
             <img id="doggo-image" alt="doggo-image" style="align-self: center;">
             <video id="doggo-video" autoplay muted loop style="max-width: 600px; max-height: 500px;">
@@ -34,6 +37,13 @@
              name="action" onclick="showFavorites()">My favorites
                 <i class="material-icons right">star</i>
             </button>
+            <button id="doggo-button" class="btn waves-effect waves-light" style="position: static;"
+             name="action" hx-get="/favorites.html" hx-target="#content" >SHOW HTMX
+                <i class="material-icons right">book</i>
+            </button>
+        </div>
+        <div id="content" style="margin-top: 2rem; max-width: 40vw; min-width: 400px; align-self: center;">
+
         </div>
     </div>
 </body>
